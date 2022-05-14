@@ -18,19 +18,29 @@ async function run() {
     try{
         await client.connect();
         const phoneCollection = client.db('products').collection('phone');
-
-        app.get('/phones', async(req, res) =>{
+       
+        // get api product
+        app.get('/product', async(req, res) =>{
             const query = {};
             const cursor =  phoneCollection.find(query);
             const result = await cursor.toArray();
             res.send(result);
         });
 
-        app.get('/phones/:id', async(req, res) => {
+        // get product on 
+        app.get('/phone/:id', async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             const result = await phoneCollection.findOne(query);
             res.send(result);
+        });
+
+        // post api product
+        app.post('/product', async (req, res) => {
+            const products = req.body ;
+            console.log(products);
+            const newProduct = await phoneCollection.insertOne(products);
+            res.send(newProduct)
         })
 
 
