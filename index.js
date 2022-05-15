@@ -38,7 +38,6 @@ async function run() {
         // post api product
         app.post('/product', async (req, res) => {
             const products = req.body ;
-            console.log(products);
             const newProduct = await phoneCollection.insertOne(products);
             res.send(newProduct)
         });
