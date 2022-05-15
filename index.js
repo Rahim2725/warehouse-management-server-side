@@ -28,7 +28,7 @@ async function run() {
         });
 
         // get product on 
-        app.get('/phone/:id', async(req, res) => {
+        app.get('/product/:id', async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             const result = await phoneCollection.findOne(query);
@@ -41,7 +41,17 @@ async function run() {
             console.log(products);
             const newProduct = await phoneCollection.insertOne(products);
             res.send(newProduct)
-        })
+        });
+
+        
+        // email api
+        app.get('/addProduct', async (req, res) => {
+            const email = req.query.email;
+            const query = { email :email} ;
+            const cursor = phoneCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        });
 
 
     }
